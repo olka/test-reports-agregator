@@ -1,0 +1,1 @@
+web: target/universal/stage/bin/test-reports-agregator -Dhttp.port=${PORT}
