@@ -9,4 +9,5 @@ script:
   - sbt test
 cache:
   directories:
-    - $HOME/.ivy2/cache
+    - $HOME/.ivy2
+    - $HOME/.m2
