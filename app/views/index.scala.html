@@ -1,0 +1,9 @@
+@import java.io.File
+@(files: List[File])
+
+<h1>Uploaded files:</h1>
+<ul>
+    @for(file <- files) {
+        <li>@file.getName() [@file.length() bytes]</li>
+    }
+</ul>

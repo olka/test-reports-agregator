@@ -2,3 +2,5 @@
 
 Allure report/Junit report agregator.
 Analog of Jenkins plugin that show stats on tests execution
+
+curl -F file=@filename http://localhost:9000/upload

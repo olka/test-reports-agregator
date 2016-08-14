@@ -1,1 +1,3 @@
 GET / controllers.Application.index
+GET /test controllers.Application.test
+POST /upload controllers.Application.uploadFile
