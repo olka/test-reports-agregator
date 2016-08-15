@@ -88,7 +88,8 @@ class ApplicationSpec extends PlaySpec with OneAppPerSuite {
   "Upload" should {
     "uploadFile returns (File uploaded)" in {
       var lines = util.Arrays.asList("The first line", "The second line")
-      Files.write(Paths.get("dataStore/tt"), lines,Charset.forName("UTF-8"))
+      Files.createDirectories(Paths.get(TestEnv.TMP_FOLDER));
+      Files.write(Paths.get(TestEnv.TMP_FOLDER+TestEnv.TMP_FILE), lines,Charset.forName("UTF-8"))
       val tempFile = TemporaryFile(new java.io.File("dataStore/tt"))
       val part = FilePart[TemporaryFile]("file", "tt2", Some("plain/test"), tempFile)
       val formData = MultipartFormData(dataParts = Map(), files = Seq(part), badParts = Seq())
@@ -108,5 +109,5 @@ class ApplicationSpec extends PlaySpec with OneAppPerSuite {
   }
 
   "dataStore directory" should {
-    "be clean" in {new File("dataStore").listFiles.foreach(_.delete())}}
+    "be clean" in {new File(TestEnv.TMP_FOLDER).listFiles.foreach(_.delete())}}
 }

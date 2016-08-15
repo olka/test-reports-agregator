@@ -1,14 +1,21 @@
 package functional
 
+import controllers.TestEnv
 import org.scalatest.tags.FirefoxBrowser
 import org.scalatestplus.play._
 
 @FirefoxBrowser
 class ExampleSpec extends PlaySpec with OneServerPerSuite with OneBrowserPerSuite with FirefoxFactory {
-    "provide a web driver" in {
+    "Webdriver: test endpoint" in {
       go to (s"http://localhost:$port/test")
       pageSource must include ("host")
       pageSource must include ("uri")
       pageSource must include ("session")
     }
+
+  "Webdriver: index page" in {
+    go to (s"http://localhost:$port/")
+    pageSource must include ("Uploaded files")
+    pageSource must include (TestEnv.TMP_FILE)
+  }
 }
