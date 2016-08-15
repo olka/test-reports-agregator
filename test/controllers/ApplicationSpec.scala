@@ -109,5 +109,10 @@ class ApplicationSpec extends PlaySpec with OneAppPerSuite {
   }
 
   "dataStore directory" should {
-    "be clean" in {new File(TestEnv.TMP_FOLDER).listFiles.foreach(_.delete())}}
+    "be clean" in {
+      var dir = new File(TestEnv.TMP_FOLDER)
+      dir.listFiles.foreach(_.delete())
+      dir.delete() must be (true)
+    }
+  }
 }

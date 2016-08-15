@@ -9,4 +9,6 @@ updateOptions := updateOptions.value.withCachedResolution(true)
 libraryDependencies += "net.sourceforge.htmlunit" % "htmlunit" % "2.23"
 libraryDependencies += "org.seleniumhq.selenium" % "selenium-java" % "2.53.1"
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "1.5.1" % "test"
+
+coverageExcludedPackages := """controllers\..*Reverse.*;"""//router.Routes.*;"""
 libraryDependencies ++= Seq()

@@ -21,6 +21,8 @@ class Application extends Controller {
 
   def index = Action(implicit request => Ok(views.html.index(getListOfFiles("./dataStore"))))
 
+  def main = Action(implicit request => Ok(views.html.main("Title")(play.twirl.api.Html.apply("Content"))))
+
   def doUpload(request: Request[MultipartFormData[TemporaryFile]]): Result = {
     request.body.file("file").map { file =>
       val filename = file.filename

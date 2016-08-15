@@ -18,4 +18,10 @@ class ExampleSpec extends PlaySpec with OneServerPerSuite with OneBrowserPerSuit
     pageSource must include ("Uploaded files")
     pageSource must include (TestEnv.TMP_FILE)
   }
+
+  "Webdriver: main page" in {
+    go to (s"http://localhost:$port/main")
+    pageTitle must be ("Title")
+    pageSource must include ("Content")
+  }
 }
