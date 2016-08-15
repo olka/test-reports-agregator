@@ -38,7 +38,6 @@ class Application extends Controller {
 
   def uploadFile = Action(parse.multipartFormData) { request =>
     doUpload(request)
-    Ok.chunked(Enumerator(index))
   }
 
   def test = Action(implicit request => Ok(currentApi))
