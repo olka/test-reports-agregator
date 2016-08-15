@@ -6,6 +6,7 @@ import java.util.stream.Collectors
 
 import play.api.Logger
 import play.api.libs.Files.TemporaryFile
+import play.api.libs.iteratee.Enumerator
 import play.api.mvc._
 import play.api.libs.json.Json._
 
@@ -33,11 +34,11 @@ class Application extends Controller {
       Redirect(routes.Application.index)
       InternalServerError("File has NOT been uploaded")
     }
-
   }
 
   def uploadFile = Action(parse.multipartFormData) { request =>
-      doUpload(request)
+    doUpload(request)
+    Ok.chunked(Enumerator(index))
   }
 
   def test = Action(implicit request => Ok(currentApi))

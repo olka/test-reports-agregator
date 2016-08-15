@@ -2,25 +2,16 @@ package controllers
 
 import java.io.File
 import java.nio.charset.Charset
-import java.nio.file.{Files, Paths, StandardOpenOption}
+import java.nio.file.{Files, Paths}
 import java.util
 
-import akka.util.ByteString
-import org.apache.commons.io.output.ByteArrayOutputStream
-import org.apache.http.entity.ContentType
-import org.apache.http.entity.mime.MultipartEntityBuilder
-import org.apache.http.entity.mime.content.{FileBody, StringBody}
-import play.api.test._
-import play.api.test.Helpers._
 import org.scalatestplus.play._
-import play.api.test._
-import play.api.test.Helpers._
 import play.api.http.Writeable
-import play.api.mvc.{AnyContentAsMultipartFormData, Codec, MultipartFormData}
 import play.api.libs.Files.TemporaryFile
-import play.api.libs.ws.WS
-import play.api.mvc.MultipartFormData.BadPart
 import play.api.mvc.MultipartFormData.FilePart
+import play.api.mvc.{AnyContentAsMultipartFormData, Codec, MultipartFormData}
+import play.api.test.Helpers._
+import play.api.test._
 import play.mvc.Http.HeaderNames
 
 
