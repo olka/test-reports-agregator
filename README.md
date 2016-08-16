@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/olka/test-reports-agregator.svg?branch=master)](https://travis-ci.org/olka/test-reports-agregator)
+[![Build Status](https://travis-ci.org/olka/test-reports-agregator.png?branch=master)](https://travis-ci.org/olka/test-reports-agregator)
 
 [![Coverage Status](https://coveralls.io/repos/github/olka/test-reports-agregator/badge.svg?branch=master)](https://coveralls.io/github/olka/test-reports-agregator?branch=master)
 

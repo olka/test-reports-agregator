@@ -1,4 +1,11 @@
-GET / controllers.Application.index
-GET /main controllers.Application.main
-GET /test controllers.Application.test
-POST /upload controllers.Application.uploadFile
+GET     /                          controllers.Application.index
+GET     /main                      controllers.Application.main
+GET     /test                      controllers.Application.test
+POST    /upload                    controllers.Application.uploadFile
+
+GET    /timeline                   controllers.Application.timeline
+GET    /mixedStream                controllers.Application.mixedStream
+GET    /mixed                      controllers.Application.mixed
+
+
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
