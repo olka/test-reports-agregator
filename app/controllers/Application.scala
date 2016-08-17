@@ -25,12 +25,14 @@ class Application @Inject()(wsClient: WSClient)(implicit ec: ExecutionContext) e
 
   def main = Action(implicit request => Ok(views.html.main("Title")(play.twirl.api.Html("Content"))))
 
+  def report = Action(implicit request => Ok(views.html.report()))
+
   def doUpload(request: Request[MultipartFormData[TemporaryFile]]): Result = {
     request.body.file("file").map { file =>
       val filename = file.filename
       val contentType = file.contentType.get
       val prefix = System.currentTimeMillis().toString.substring(4)
-      file.ref.moveTo(new File(s"./dataStore/$prefix$filename"))
+      file.ref.moveTo(new File(s"./dataStore/($prefix)$filename"))
       log.info(s"$filename : $contentType")
       Ok("File has been uploaded")
     }.getOrElse {
@@ -54,54 +56,28 @@ class Application @Inject()(wsClient: WSClient)(implicit ec: ExecutionContext) e
 
   //Producer
   def timeline() = Action {
-    //XmlTestResultParser.getJunitTestsMetadata()
-    val source = Source.tick(FiniteDuration(0,TimeUnit.SECONDS), FiniteDuration(1,TimeUnit.SECONDS), tick = XmlTestResultParser.getJunitTestsMetadata())
-    Ok.chunked(source.map { tick =>
-      obj(
-        "filename" -> JsString(tick.take(3).toString())
-      ).toString + "\n"
-    }.limit(100))
+//    val source = Source.tick(FiniteDuration(0,TimeUnit.SECONDS), FiniteDuration(1,TimeUnit.SECONDS), tick = XmlTestResultParser.getJunitTestsMetadata())
+  val source = Source(XmlTestResultParser.getJunitTestsMetadata())
+  Ok.chunked(source.map { tick =>
+    obj("filename" -> JsString(tick.toString())).toString + "\n"}.limit(100))
   }
 
   //Consumer
-  def mixedStream() = Action {
-    val keywordSources = Source("1,1,1,2".split(",").toList)
-    val responses = keywordSources.flatMapMerge(10, queryToSource)
-    Ok.chunked(responses via EventSource.flow)
+  def timelineStream() = Action {
+    Ok.chunked(Source(XmlTestResultParser.getJunitTestsMetadata()) via EventSource.flow)
   }
 
-  private def queryToSource(tt: String) = {
-    val request = wsClient.url("http://localhost:9000/timeline")
-    streamResponse(request)
-      .via(framing)
-      .map { byteString =>
-        val json = Json.parse(byteString.utf8String)
-        val tweetInfo = TestEntry((json \ "title").as[String], (json \ "message").as[String], (json \ "isFailed").as[Boolean])
-        Json.toJson(tweetInfo)
-      }
-  }
-  val framing = Framing.delimiter(ByteString("\n"), maximumFrameLength = 100, allowTruncation = true)
-  private def streamResponse(request: WSRequest) = Source.fromFuture(request.stream()).flatMapConcat(_.body)
-
-  private def getTestData = {
-    import java.util.Random
-    val titles = List("1", "2", "3")
-    val messages = List("PASSED", "NullPointer", "StackOverflow")
-    val rand = new Random()
-    TestEntry(titles(rand.nextInt(titles.length)), messages(rand.nextInt(messages.length)), false)
-  }
-
-  def mixed() = Action {
-//    Ok(views.html.mixed)
-    Ok("Mixed")
-  }
-
-  def xmlParser = Action(parse.xml) { request =>
-    (request.body \\ "name" headOption).map(_.text).map { name =>
-      Ok("Hello " + name)
-    }.getOrElse {
-      BadRequest("Missing parameter [name]")
-    }
-  }
+//  private def queryToSource() = {
+//    val request = wsClient.url("http://localhost:9000/timeline")
+//    streamResponse(request)
+//      .via(framing)
+//      .map { byteString =>
+//        val json = Json.parse(byteString.utf8String)
+//        val testInfo = TestEntry((json \ "title").as[String], (json \ "message").as[String], (json \ "isFailed").as[Boolean])
+//        Json.toJson(TestEntry("1","2",false))
+//      }
+//  }
+//  val framing = Framing.delimiter(ByteString("\n"), maximumFrameLength = 100, allowTruncation = true)
+//  private def streamResponse(request: WSRequest) = Source.fromFuture(request.stream()).flatMapConcat(_.body)
 
 }

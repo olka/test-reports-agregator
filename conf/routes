@@ -4,8 +4,8 @@ GET     /test                      controllers.Application.test
 POST    /upload                    controllers.Application.uploadFile
 
 GET    /timeline                   controllers.Application.timeline
-GET    /mixedStream                controllers.Application.mixedStream
-GET    /mixed                      controllers.Application.mixed
+GET    /timelineStream             controllers.Application.timelineStream
+GET    /report                     controllers.Application.report
 
 
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

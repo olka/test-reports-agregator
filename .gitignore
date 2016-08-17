@@ -9,6 +9,7 @@
 .lib/
 dist/*
 target/
+dataStore/
 logs/
 lib_managed/
 src_managed/

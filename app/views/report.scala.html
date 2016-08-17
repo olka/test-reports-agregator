@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Mixed</title>
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+    <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/bootstrap/css/bootstrap.css")">
+    <script src="@routes.Assets.versioned("javascripts/jquery-1.7.1.min.js")" type="text/javascript"></script>
+
+</head>
+<body>
+    <h2>Live mixed-tweets</h2>
+    <p id="data">Data: <br/></p>
+
+<script>
+if(typeof(EventSource) !== "undefined") {
+    var source = new EventSource("@routes.Application.timelineStream()");
+    source.onmessage = function(event) {
+        document.getElementById("data").innerHTML += event.data + "<br/>==========<br/>";};}
+else { document.getElementById("data").innerHTML = "Sorry, your browser does not support server-sent events...";}
+</script>
+</body>
+</html>
