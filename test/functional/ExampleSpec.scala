@@ -15,7 +15,7 @@ class ExampleSpec extends PlaySpec with OneServerPerSuite with OneBrowserPerSuit
 
   "Webdriver: index page" in {
     prepareFiles()
-    go to (s"http://localhost:$port")
+    go to (s"http://localhost:$port/")
     pageSource must include ("Uploaded files")
     pageSource must include (TestEnv.TMP_FILE)
   }
