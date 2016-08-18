@@ -49,7 +49,7 @@ object MultipartFormDataWritable {
 }
 
 
-trait FileUploadSpec extends PlaySpec with OneAppPerSuite with FilePreparator {
+class FileUploadSpec extends PlaySpec with OneAppPerSuite with FilePreparator {
 
     "Upload" should {
       "uploadFile returns (File uploaded)" in {

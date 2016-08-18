@@ -15,7 +15,7 @@ class ExampleSpec extends PlaySpec with OneServerPerSuite with OneBrowserPerSuit
 
   "Webdriver: index page" in {
     prepareFiles()
-    go to (s"http://localhost:$port/")
+    go to (s"http://localhost:$port")
     pageSource must include ("Uploaded files")
     pageSource must include (TestEnv.TMP_FILE)
   }
@@ -26,12 +26,13 @@ class ExampleSpec extends PlaySpec with OneServerPerSuite with OneBrowserPerSuit
     pageSource must include ("Content")
   }
 
-  "Webdriver: mixed page" in {
+  "Webdriver: report page" in {
+    prepareFiles()
     go to (s"http://localhost:$port/report")
     pageSource must include (TestEnv.TMP_FILE)
   }
 
-  "Webdriver: mixed page with no files" in {
+  "Webdriver: report page with no files" in {
     deleteFiles()
     go to (s"http://localhost:$port/report")
     pageSource must not include (TestEnv.TMP_FILE)

@@ -2,10 +2,10 @@ GET     /                          controllers.Application.index
 GET     /main                      controllers.Application.main
 GET     /test                      controllers.Application.test
 POST    /upload                    controllers.Application.uploadFile
+GET     /report                     controllers.Application.report
 
-GET    /timeline                   controllers.Application.timeline
-GET    /timelineStream             controllers.Application.timelineStream
-GET    /report                     controllers.Application.report
+GET    /timeline                   controllers.ReportDataStreamer.timeline
+GET    /reportStream               controllers.ReportDataStreamer.reportStream
 
 
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
