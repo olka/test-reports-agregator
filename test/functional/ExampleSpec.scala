@@ -1,6 +1,8 @@
 package functional
 
 import controllers.{FilePreparator, FileUploadSpec, TestEnv}
+import org.openqa.selenium.By
+import org.openqa.selenium.support.ui.{ExpectedCondition, ExpectedConditions, WebDriverWait}
 import org.scalatest.tags.FirefoxBrowser
 import org.scalatestplus.play._
 
@@ -29,7 +31,7 @@ class ExampleSpec extends PlaySpec with OneServerPerSuite with OneBrowserPerSuit
   "Webdriver: report page" in {
     prepareFiles()
     go to (s"http://localhost:$port/report")
-    pageSource must include (TestEnv.TMP_FILE)
+    eventually { pageSource must include (TestEnv.TMP_FILE) }
   }
 
   "Webdriver: report page with no files" in {
